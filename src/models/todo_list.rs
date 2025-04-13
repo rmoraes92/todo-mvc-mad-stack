@@ -1,6 +1,7 @@
 use crate::schema;
 use diesel::prelude::*;
-#[derive(Queryable, Debug, Insertable, Selectable)]
+
+#[derive(Debug, Queryable, Selectable)]
 #[diesel(table_name = schema::todo_list)]
 #[diesel(check_for_backend(diesel::sqlite::Sqlite))]
 pub struct TodoList {
@@ -8,9 +9,9 @@ pub struct TodoList {
     pub name: String,
 }
 
-//#[derive(Debug, Insertable)]
-//#[diesel(table_name = self::schema::users)]
-//struct NewUser<'a> {
-//    id: &'a str,
-//    name: &'a str,
-//}
+#[derive(Debug, Queryable, Insertable)]
+#[diesel(table_name = schema::todo_list)]
+#[diesel(check_for_backend(diesel::sqlite::Sqlite))]
+pub struct TodoListCreate {
+    pub name: String,
+}
