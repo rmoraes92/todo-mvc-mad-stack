@@ -5,7 +5,7 @@ use actix_web::{
 use maud::Markup;
 
 use crate::controllers::database::DatabaseConnectionPool;
-use crate::{controllers::dao::todo_list::get_todo_list, views::home::home_view};
+use crate::{controllers::dao::todo_list::research_todo_list, views::home::home_view};
 
 #[get("/", name = "home")]
 async fn home(
@@ -13,7 +13,7 @@ async fn home(
     db_pool: Data<DatabaseConnectionPool>,
 ) -> impl Responder {
     let todo_list =
-        match web::block(move || get_todo_list(&mut db_pool.get().unwrap()).unwrap()).await {
+        match web::block(move || research_todo_list(&mut db_pool.get().unwrap()).unwrap()).await {
             Ok(todo_list) => todo_list,
             Err(e) => {
                 eprintln!("Error fetching todo list: {}", e); // TODO remove me later
