@@ -1,0 +1,21 @@
+[jobs.check]
+command = ["cargo", "check"]
+need_stdout = true
+
+[jobs.test]
+command = ["bash", "cargo-fix-and-test.bash"]
+need_stdout = true
+
+[jobs.run]
+command = ["cargo", "run"]
+need_stdout = true
+background = false
+on_change_strategy = "kill_then_restart"
+kill = ["kill", "-s", "INT"]
+
+[jobs.run_all]
+command = ["bash", "mash-live-reload.bash"]
+need_stdout = true
+background = false
+on_change_strategy = "kill_then_restart"
+kill = ["kill", "-s", "INT"]
