@@ -1,14 +1,19 @@
 use actix_web::{App, HttpServer, web::Data};
+use dotenvy::dotenv;
+use std::env;
 
-use todo_mash_v2::controllers::{
+use todo_mad::controllers::{
     database::build_db_conn_pool,
     endpoints::{todolist_create::{todolist_create, todolist_create_post}, echo::echo, home::home},
 };
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    let db_pool = build_db_conn_pool()
-        .await
+    dotenv().ok();
+
+    let db_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
+    
+    let db_pool = build_db_conn_pool(&db_url)
         .expect("Failed to create database pool");
 
     // Start Actix server
